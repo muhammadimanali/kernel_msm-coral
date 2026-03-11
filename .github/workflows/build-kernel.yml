@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout kernel source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -54,7 +54,7 @@ jobs:
             -j$(nproc)
 
       - name: Upload kernel image
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kernel-flame-droidspaces
           path: out/arch/arm64/boot/Image.lz4-dtb
