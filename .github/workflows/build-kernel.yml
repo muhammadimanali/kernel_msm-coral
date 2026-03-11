@@ -36,10 +36,9 @@ jobs:
       - name: Merge defconfig with Droidspaces config
         run: |
           export ARCH=arm64
-          make O=out \
-            ARCH=arm64 \
-            floral_defconfig \
-            arch/arm64/configs/droidspaces.config
+          make O=out ARCH=arm64 floral_defconfig
+          ./scripts/kconfig/merge_config.sh -m -O out out/.config arch/arm64/configs/droidspaces.config
+          make O=out ARCH=arm64 olddefconfig
 
       - name: Build kernel
         run: |
