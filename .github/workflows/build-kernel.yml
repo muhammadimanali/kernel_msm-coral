@@ -46,6 +46,7 @@ jobs:
             OBJCOPY=llvm-objcopy \
             OBJDUMP=llvm-objdump \
             STRIP=llvm-strip \
+            Image.lz4-dtb \
             -j$(nproc)
 
       - name: Upload kernel image
