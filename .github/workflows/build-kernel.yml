@@ -22,6 +22,10 @@ jobs:
           mkdir -p $HOME/toolchains/proton-clang
           git clone --depth=1 https://github.com/kdrag0n/proton-clang $HOME/toolchains/proton-clang
 
+      - name: Download ARM32 GCC
+        run: |
+          sudo apt-get install -y gcc-arm-linux-gnueabi
+
       - name: Merge defconfig with Droidspaces config
         run: |
           export ARCH=arm64
