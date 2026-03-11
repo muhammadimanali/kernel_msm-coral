@@ -15,29 +15,25 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y bc bison build-essential flex \
-            libncurses-dev libssl-dev zip python3
+            libncurses-dev libssl-dev zip python3 \
+            gcc-arm-linux-gnueabi
 
       - name: Download Proton Clang
         run: |
           mkdir -p $HOME/toolchains/proton-clang
           git clone --depth=1 https://github.com/kdrag0n/proton-clang $HOME/toolchains/proton-clang
 
-      - name: Download ARM32 GCC
-        run: |
-          sudo apt-get install -y gcc-arm-linux-gnueabi
-
-      - name: Merge defconfig with Droidspaces config
+      - name: Generate defconfig
         run: |
           export ARCH=arm64
           export PATH="$HOME/toolchains/proton-clang/bin:$PATH"
           make O=out ARCH=arm64 floral_defconfig
-          ./scripts/kconfig/merge_config.sh -m -O out out/.config arch/arm64/configs/droidspaces.config
           make O=out ARCH=arm64 olddefconfig
 
       - name: Build kernel
         run: |
           export ARCH=arm64
-          export PATH="$HOME/toolchains/proton-clang/bin:$PATH"
+          export PATH="$HOME/toolchains/proton-clang/bin:/usr/bin:$PATH"
           make O=out \
             ARCH=arm64 \
             CC=clang \
